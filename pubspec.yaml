@@ -19,6 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   plugin_platform_interface: ^2.0.2
 
 dev_dependencies:
@@ -34,6 +36,9 @@ flutter:
         pluginClass: FlutterCrispChatPlugin
       ios:
         pluginClass: FlutterCrispChatPlugin
+      web:
+        fileName: src/flutter_crisp_chat_web_plugin.dart
+        pluginClass: FlutterCrispChatWebPlugin
 
 topics:
   - crisp
