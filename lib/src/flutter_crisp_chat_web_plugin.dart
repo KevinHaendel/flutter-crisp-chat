@@ -12,10 +12,16 @@ external void crispPush(JSArray<JSAny?> args);
 external String? crispGet(JSString key);
 
 @JS('CRISP_TOKEN_ID')
-external set crispTokenId(String tokenId);
+external set crispTokenId(String? tokenId);
+
+@JS('CRISP_TOKEN_ID')
+external String? get crispTokenId;
 
 @JS('CRISP_WEBSITE_ID')
-external set crispWebsiteId(String websiteId);
+external set crispWebsiteId(String? websiteId);
+
+@JS('CRISP_WEBSITE_ID')
+external String? get crispWebsiteId;
 
 class FlutterCrispChatWebPlugin extends FlutterCrispChatPlatform {
   static void registerWith(Registrar registrar) {
@@ -24,6 +30,9 @@ class FlutterCrispChatWebPlugin extends FlutterCrispChatPlatform {
 
   @override
   Future<void> openCrispChat({required CrispConfig config}) async {
+    final oldWebsiteId = crispWebsiteId;
+    final oldTokenId = crispTokenId;
+
     crispWebsiteId = config.websiteID;
     if (config.tokenId != null) crispTokenId = config.tokenId!;
 
@@ -47,7 +56,9 @@ class FlutterCrispChatWebPlugin extends FlutterCrispChatPlatform {
       }
     }
 
-    resetCrispChatSession(); // reset since we've changed the websiteId and tokenId
+    if (oldTokenId != config.tokenId || oldWebsiteId != config.websiteID) {
+      resetCrispChatSession(); // reset since we've changed the websiteId and tokenId
+    }
 
     crispPush(["do".toJS, "chat:open".toJS].toJS);
   }
