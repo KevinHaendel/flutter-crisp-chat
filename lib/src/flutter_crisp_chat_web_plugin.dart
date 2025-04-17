@@ -60,6 +60,7 @@ class FlutterCrispChatWebPlugin extends FlutterCrispChatPlatform {
       resetCrispChatSession(); // reset since we've changed the websiteId and tokenId
     }
 
+    crispPush(["do".toJS, "chat:show".toJS].toJS); // ensure chat is shown
     crispPush(["do".toJS, "chat:open".toJS].toJS);
   }
 
